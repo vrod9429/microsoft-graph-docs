@@ -7865,9 +7865,10 @@
           href: api/policy-list-assigned.md
         - name: List applied to applications
           href: api/policy-list-appliesto.md
-      - name: Privileged Identity Management
-        href: resources/privilegedidentitymanagement-root.md
+      - name: Privileged Identity Management - Azure AD
         items:
+        - name: Overview
+          href: resources/privilegedidentitymanagement-root.md
         - name: Privileged role
           href: resources/privilegedrole.md
           items:
@@ -7929,6 +7930,8 @@
           items:
           - name: List audit events
             href: api/privilegedoperationevent-list.md
+      - name: Privileged Identity Management - Azure Resources
+        items:
         - name: Managed resources
           href: resources/governanceresource.md
           items:
