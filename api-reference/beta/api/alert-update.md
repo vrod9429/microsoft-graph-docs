@@ -1,155 +1,116 @@
 ---
 title: "Update alert"
-description: "Update an editable alert property within any integrated solution to keep alert status and assignments in sync across solutions."
+description: "Update the properties of alert object."
 localization_priority: Normal
-author: "preetikr"
-ms.prod: "security"
+author: ""
+ms.prod: ""
+doc_type: "apiPageType"
 ---
 
 # Update alert
 
- [!INCLUDE [beta-disclaimer](../../includes/beta-disclaimer.md)]
+[!INCLUDE [beta-disclaimer](../../includes/beta-disclaimer.md)]
 
-Update an editable **alert** property within any integrated solution to keep alert status and assignments in sync across solutions. This method updates any solution that has a record of the referenced alert ID.
+Update the properties of alert object.
 
 ## Permissions
 
 One of the following permissions is required to call this API. To learn more, including how to choose permissions, see [Permissions](/graph/permissions-reference).
 
-|Permission type      | Permissions (from least to most privileged)              |
-|:--------------------|:---------------------------------------------------------|
-|Delegated (work or school account) |   SecurityEvents.ReadWrite.All  |
-|Delegated (personal Microsoft account) |  Not supported.  |
-|Application | SecurityEvents.ReadWrite.All |
+| Permission type                        | Permissions (from least to most privileged) |
+|:---------------------------------------|:--------------------------------------------|
+| Delegated (work or school account)     | Not supported. |
+| Delegated (personal Microsoft account) | Not supported. |
+| Application                            | Not supported. |
 
 ## HTTP request
 
-> **Note:** You must include the **alert** ID as a parameter and vendorInformation containing the `provider` and `vendor` with this method.
 <!-- { "blockType": "ignored" } -->
 
 ```http
-PATCH /security/alerts/{alert_id}
+PATCH /Security/alerts/{id}
 ```
 
 ## Request headers
 
 | Name       | Description|
 |:-----------|:-----------|
-| Authorization  | Bearer {code}. Required.|
-|Prefer | return=representation |
+| Authorization | Bearer {code} |
 
 ## Request body
 
-In the request body, supply a JSON representation of the values for relevant fields that should be updated. The body **must** contain the `vendorInformation` property with valid `provider` and `vendor` fields. The following table lists the fields that can be updated for an alert. The values for existing properties that are not included in the request body will not change. For best performance, don't include existing values that haven't changed.
+In the request body, supply the values for relevant fields that should be updated. Existing properties that are not included in the request body will maintain their previous values or be recalculated based on changes to other property values. For best performance, don't include existing values that haven't changed.
 
-| Property   | Type |Description|
-|:---------------|:--------|:----------|
-|assignedTo|String|Name of the analyst the alert is assigned to for triage, investigation, or remediation.|
-|closedDateTime|DateTimeOffset|Time at which the alert was closed. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time. For example, midnight UTC on Jan 1, 2014 would look like this: `'2014-01-01T00:00:00Z'`.|
-|comments|String collection|Analyst comments on the alert (for customer alert management).|
-|feedback|alertFeedback enum|Analyst feedback on the alert. Possible values are: `unknown`, `truePositive`, `falsePositive`, `benignPositive`.|
-|status|alertStatus enum|Alert life cycle status (stage). Possible values are: `unknown`, `newAlert`, `inProgress`, `resolved`.|
-|tags|String collection|User-definable labels that can be applied to an alert and can serve as filter conditions (for example, "HVA", "SAW).|
-|vendorInformation |[securityVendorInformation](../resources/securityvendorinformation.md)|Complex type containing details about the security product/service vendor, provider, and subprovider (for example, vendor=Microsoft; provider=Windows Defender ATP; subProvider=AppLocker). **Provider and vendor fields are required.**|
+| Property     | Type        | Description |
+|:-------------|:------------|:------------|
+|activityGroupName|String||
+|assignedTo|String||
+|azureSubscriptionId|String||
+|azureTenantId|String||
+|category|String||
+|closedDateTime|DateTimeOffset||
+|cloudAppStates|cloudAppSecurityState collection||
+|comments|String collection||
+|confidence|Int32||
+|createdDateTime|DateTimeOffset||
+|description|String||
+|detectionIds|String collection||
+|eventDateTime|DateTimeOffset||
+|feedback|string| Possible values are: `unknown`, `truePositive`, `falsePositive`, `benignPositive`, `unknownFutureValue`.|
+|fileStates|fileSecurityState collection||
+|historyStates|alertHistoryState collection||
+|hostStates|hostSecurityState collection||
+|lastModifiedDateTime|DateTimeOffset||
+|malwareStates|malwareState collection||
+|networkConnections|networkConnection collection||
+|processes|process collection||
+|recommendedActions|String collection||
+|registryKeyStates|registryKeyState collection||
+|severity|string| Possible values are: `unknown`, `informational`, `low`, `medium`, `high`, `unknownFutureValue`.|
+|sourceMaterials|String collection||
+|status|string| Possible values are: `unknown`, `newAlert`, `inProgress`, `resolved`, `dismissed`, `unknownFutureValue`.|
+|tags|String collection||
+|title|String||
+|triggers|alertTrigger collection||
+|userStates|userSecurityState collection||
+|vendorInformation|securityVendorInformation||
+|vulnerabilityStates|vulnerabilityState collection||
 
 ## Response
 
-If successful, this method returns a `204 No Content` response code.
-
-If the optional request header is used, the method returns a `200 OK` response code and the updated [alert](../resources/alert.md) object in the response body.
+If successful, this method returns a `200 OK` response code and an updated [alert](../resources/alert.md) object in the response body.
 
 ## Examples
 
-### Example 1: Request without Prefer header
+### Request
 
-#### Request
-
-The following is an example of the request without the `Prefer` header.
+The following is an example of the request.
 <!-- {
   "blockType": "request",
   "name": "update_alert"
 }-->
 
 ```http
-PATCH https://graph.microsoft.com/beta/security/alerts/{alert_id}
+PATCH https://graph.microsoft.com/beta/Security/alerts/{id}
 Content-type: application/json
 
 {
-  "assignedTo": "String",
-  "closedDateTime": "String (timestamp)",
-  "comments": ["String"],
-  "feedback": "@odata.type: microsoft.graph.alertFeedback",
-  "status": "@odata.type: microsoft.graph.alertStatus",
-  "tags": ["String"],
-  "vendorInformation":
-    {
-      "provider": "String",
-      "vendor": "String"
-    }
+  "activityGroupName": "activityGroupName-value",
+  "assignedTo": "assignedTo-value",
+  "azureSubscriptionId": "azureSubscriptionId-value",
+  "azureTenantId": "azureTenantId-value",
+  "category": "category-value",
+  "closedDateTime": "datetime-value"
 }
 ```
 
-<!-- markdownlint-disable MD024 -->
+### Response
 
-#### Response
+The following is an example of the response.
 
-The following is an example of a successful response.
-<!-- {
-  "blockType": "response",
-  "truncated": true,
-  "@odata.type": "microsoft.graph.alert"
-} -->
+> [!NOTE]
+> The response object shown here might be shortened for readability. All the properties will be returned from an actual call.
 
-```http
-HTTP/1.1 204 No Content
-```
-#### SDK sample code
-# [C#](#tab/cs)
-[!INCLUDE [sample-code](../includes/update_alert-Cs-snippets.md)]
-
-# [Javascript](#tab/javascript)
-[!INCLUDE [sample-code](../includes/update_alert-Javascript-snippets.md)]
-
----
-
-[!INCLUDE [sdk-documentation](../includes/snippets_sdk_documentation_link.md)]
-
-### Example 2: Request with Prefer header
-
-#### Request
-
-The following example shows a request that includes the `Prefer` request header.
-
-<!-- {
-  "blockType": "request",
-  "name": "update_alert"
-}-->
-
-```http
-PATCH https://graph.microsoft.com/beta/security/alerts/{alert_id}
-Content-type: application/json
-Prefer: return=representation
-
-{
-  "assignedTo": "String",
-  "closedDateTime": "String (timestamp)",
-  "comments": ["String"],
-  "feedback": "@odata.type: microsoft.graph.alertFeedback",
-  "status": "@odata.type: microsoft.graph.alertStatus",
-  "tags": ["String"],
-  "vendorInformation":
-    {
-      "provider": "String",
-      "vendor": "String"
-    }
-}
-```
-
-#### Response
-
-The following is an example of the response when the optional `Prefer: return=representation` request header is used.
-
->**Note:** The response object shown here might be shortened for readability. All the properties will be returned from an actual call.
 <!-- {
   "blockType": "response",
   "truncated": true,
@@ -170,20 +131,12 @@ Content-type: application/json
 }
 ```
 
-<!-- uuid: 8fcb5dbc-d5aa-4681-8e31-b001d5168d79
-2015-10-25 14:57:30 UTC -->
-<!--
-{
+<!-- uuid: 16cd6b66-4b1a-43a1-adaf-3a886856ed98
+2019-02-04 14:57:30 UTC -->
+<!-- {
   "type": "#page.annotation",
   "description": "Update alert",
   "keywords": "",
   "section": "documentation",
-  "tocPath": "",
-  "suppressions": [
-    "Error: /api-reference/beta/api/alert-update.md:\r\n      BookmarkMissing: '[#tab/cs](C#)'. Did you mean: #c (score: 5)",
-    "Error: /api-reference/beta/api/alert-update.md:\r\n      BookmarkMissing: '[#tab/javascript](Javascript)'. Did you mean: #javascript (score: 4)",
-    "Error: /api-reference/beta/api/alert-update.md:\r\n      BookmarkMissing: '[#tab/cs](C#)'. Did you mean: #c (score: 5)",
-    "Error: /api-reference/beta/api/alert-update.md:\r\n      BookmarkMissing: '[#tab/javascript](Javascript)'. Did you mean: #javascript (score: 4)"
-  ]
-}
--->
+  "tocPath": ""
+}-->
