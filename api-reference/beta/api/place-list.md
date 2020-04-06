@@ -20,6 +20,8 @@ A **place** object can be one of the following types:
 
 Both **room** and **roomList** are derived from the **place** object.
 
+This operation will return 100 places per page. 
+
 Compared with the [findRooms](../api/user-findrooms.md) and [findRoomLists](../api/user-findroomlists.md) functions, this operation returns a richer payload for rooms and room lists. See [details](../resources/place.md#using-the-places-api) for how they compare.
 
 ## Permissions
